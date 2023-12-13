@@ -12,7 +12,7 @@ This bookmark lets you open any YouTube video or playlist in a new popup-like wi
 Create a new bookmark with any name and use the following text as the URL (copy-paste).
 
 ```JavaScript
-javascript:(()=>{"use strict";const t=document.body.querySelector("video.video-stream.html5-main-video"),e=window.location.search.match(/[?&]v=([^&]+)/)?.[1],o=window.location.search.match(/[?&]list=([^&]+)/)?.[1];if(!e&&!o)return alert("No video and/or playlist found");const i=t?(()=>{t.pause();const{left:i,top:n,width:a,height:r}=t.getBoundingClientRect();return window.open(`${window.location.protocol}//www.youtube.com/embed/${e??"videoseries"}?autoplay=1&start=${Math.trunc(t.currentTime)}${o?`&list=${o}`:""}`,"_blank",`menubar=0,status=0,titlebar=0,top=${window.screenTop+n},left=${window.screenLeft+i},width=${Math.max(100,a)},height=${Math.max(100,r)}`)})():window.open(`${window.location.protocol}//www.youtube.com/embed/${e??"videoseries"}?autoplay=1${o?`&list=${o}`:""}`,"_blank",`menubar=0,status=0,titlebar=0,top=${window.screenTop},left=${window.screenLeft},width=${Math.max(100,window.innerWidth)},height=${Math.max(100,window.innerHeight)}`);i&&e&&o&&i.addEventListener("load",(()=>{const t=i.document.querySelector("div#player div.ytp-title-text>a[href]");t&&t.href.match(/[?&]v=([^&]+)/)?.[1]!==e&&(i.location.search=i.location.search.replace(/(\?)list=[^&]+&|&list=[^&]+/,"$1"))}),{passive:!0,once:!0})})();
+javascript:(()=>{"use strict";const t=document.body.querySelector("video.video-stream.html5-main-video"),e=window.location.search.match(/[?&]v=([^&]+)/)?.[1],o=window.location.search.match(/[?&]list=([^&]+)/)?.[1];if(!e&&!o)return alert("No video and/or playlist found");const i=t?(()=>{t.pause();const{left:i,top:n,width:a,height:r}=t.getBoundingClientRect();return window.open(`${window.location.protocol}//www.youtube.com/embed/${e??"videoseries"}?autoplay=1&start=${Math.trunc(t.currentTime)}${o?`&list=${o}`:""}`,"_blank",`menubar=0,status=0,titlebar=0,top=${window.screenTop+n},left=${window.screenLeft+i},width=${Math.max(100,a)},height=${Math.max(100,r)}`)})():window.open(`${window.location.protocol}//www.youtube.com/embed/${e??"videoseries"}?autoplay=1${o?`&list=${o}`:""}`,"_blank",`menubar=0,status=0,titlebar=0,top=${window.screenTop},left=${window.screenLeft},width=${Math.max(100,window.innerWidth)},height=${Math.max(100,window.innerHeight)}`);i&&e&&o&&i.addEventListener("DOMContentLoaded",(()=>{const t=i.document.querySelector("div#player div.ytp-title-text>a[href]");t&&t.href.match(/[?&]v=([^&]+)/)?.[1]!==e&&(i.location.search=i.location.search.replace(/(\?)list=[^&]+&|&list=[^&]+/,"$1"))}),{passive:!0,once:!0})})();
 ```
 
 The text is minified JavaScript, which executes when the bookmark is clicked (on the current page).
@@ -55,7 +55,7 @@ Also checks the time of the YouTube video player (first `video` element, with cl
             `menubar=0,status=0,titlebar=0,top=${ window.screenTop },left=${ window.screenLeft },width=${ Math.max(100, window.innerWidth) },height=${ Math.max(100, window.innerHeight) }`
         );
     if(popup && video && list){
-        popup.addEventListener("load", () => {
+        popup.addEventListener("DOMContentLoaded", () => {
             "use strict";
             const title = popup.document.querySelector("div#player div.ytp-title-text>a[href]");
             if(title && title.href.match(/[?&]v=([^&]+)/)?.[1] !== video) popup.location.search = popup.location.search.replace(/(\?)list=[^&]+&|&list=[^&]+/, "$1");
